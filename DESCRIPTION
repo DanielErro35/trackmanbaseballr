@@ -2,7 +2,10 @@ Package: trackmanbaseballr
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("Daniel", "Erro", , "danielerro35@gmail.com", role = c("aut", "cre"))
+    person(given = "Daniel", family = "Erro", 
+    email = "danielerro35@gmail.com", role = c("aut", "cre")),
+    person(given = "Katherine", family = "Chan", 
+    email = "katherine.charis.chan@gmail.com", role = c("aut"))
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
