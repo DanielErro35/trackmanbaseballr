@@ -12,6 +12,13 @@
 #' @export
 pitch_breakdown <- function(data, pitcherid, type = "tagged") {
 
+  # check that pitcherid is a number
+  if (!is.numeric(pitcherid)) {
+    stop("pitcherid must be numeric.")
+  }  else if (!(pitcherid %in% data$PitcherId)) {
+    stop("pitcherid is not present as a pitcher in this game")
+  }
+
   if (type == "tagged"){
     column = "TaggedPitchType"
   } else{
@@ -28,7 +35,9 @@ pitch_breakdown <- function(data, pitcherid, type = "tagged") {
 
 }
 
-
+# besides just % of each type of pitch, summarize
+# proportion strikes, balls, fouls, hits (hits can be broken down further)
+# average speed
 
 #' Description for helper function
 #'
