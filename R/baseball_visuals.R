@@ -21,6 +21,18 @@ movement_chart <- function(data, pitcherid){
   pitcher_data <- data %>%
     filter(PitcherId == pitcherid)
 
+  pitcher_name <- data$Pitcher[1]
+  date <- data$Date[1]
 
+  pitcher_data %>%
+    ggplot(aes(x = HorzBreak, y = InducedVertBreak, color = TaggedPitchType)) +
+    geom_point(stat = "identity") +
+    ggtitle(glue::glue("{pitcher_name}: Movement Chart ({date})")) +
+    xlab("Horizontal Break") +
+    ylab("Induced Vertical Break") +
+    xlim(-30, 30) +
+    ylim(-30, 30) +
+    geom_vline(xintercept=0) +
+    geom_hline(yintercept=0)
 
 }
