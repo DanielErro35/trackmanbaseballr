@@ -31,13 +31,14 @@ movement_chart <- function(data, pitcherid){
   pitcher_data %>%
     ggplot(aes(x = HorzBreak, y = InducedVertBreak, color = TaggedPitchType)) +
     geom_point(stat = "identity") +
-    ggtitle(glue::glue("{pitcher_name}: Movement Profile ({date})")) +
-    xlab("Horizontal Break") +
-    ylab("Induced Vertical Break") +
+    ggtitle(glue::glue("{pitcher_firstname} {pitcher_lastname}: Movement Profile ({date})")) +
+    xlab("Horizontal Break (in)") +
+    ylab("Induced Vertical Break (in)") +
     xlim(-30, 30) +
     ylim(-30, 30) +
     geom_vline(xintercept=0) +
-    geom_hline(yintercept=0)
+    geom_hline(yintercept=0) +
+    theme_minimal()
 
 }
 
@@ -80,6 +81,7 @@ release_point_chart <- function(data, pitcherid){
     xlim(-4, 4) +
     ylim(0, 8) +
     geom_vline(xintercept=0) +
-    geom_hline(yintercept=0)
+    geom_hline(yintercept=0) +
+    theme_minimal()
 
 }
