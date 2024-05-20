@@ -1,4 +1,4 @@
-#' Description of function
+#' Function to summarize a pitcher's game statistics
 #'
 #' @param data trackman baseball dataset
 #' @param pitcherid The ID of pitcher
@@ -51,12 +51,12 @@ poly_utah_game <- read.csv(here::here("5-10-24_CalPoly_UtahTech.csv"))
 pitch_breakdown(data = poly_utah_game, pitcherid = 1000114562)
 
 
-#' Description for helper function
+#' Helper function to summarize columns of interest
 #'
-#' @param name description
-#' @param name description
+#' @param pitcher_data A trackman baseball dataframe, subsetted by pitcher of
+#' interest with PitchCallClass column to calculate strikes
 #'
-#' @return
+#' @return A dataframe with pitch type as columns and summarized values as rows
 pitch_summary <- function(pitcher_data) {
 
   pitcher_summarized <- pitcher_data %>%
