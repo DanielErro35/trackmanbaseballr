@@ -29,6 +29,8 @@ pitcher_chart <- function(data, pitcherid, type){
     movement_chart(pitcher_data, pitcher_firstname, pitcher_lastname, game_date)
   } else if(type == "release"){
     release_chart(pitcher_data, pitcher_firstname, pitcher_lastname, game_date)
+  } else if(type == "location"){
+    location_chart(pitcher_data, pitcher_firstname, pitcher_lastname, game_date)
   }
 
 }
@@ -81,6 +83,35 @@ release_chart <- function(data, firstname, lastname, game_date){
     ylim(0, 8) +
     geom_vline(xintercept=0) +
     geom_hline(yintercept=0) +
+    theme_minimal()
+
+}
+
+#' Description of helper function
+#'
+#' @param data trackman baseball dataset
+#' @param pitcherid The ID of pitcher
+#'
+#' @return A scatter plot displaying pitch locations by pitch type
+#'
+#' @importFrom package function
+#'
+#' @export
+location_chart <- function(data, firstname, lastname, game_date){
+
+  data %>%
+    ggplot(aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType)) +
+    geom_point(stat = "identity") +
+    ggtitle(glue::glue("{firstname} {lastname}: Pitch Location ({game_date})")) +
+    xlab("x") +
+    ylab("y") +
+    xlim(-3, 3) +
+    ylim(0, 5)  +
+    # Add strike zone
+    geom_segment(aes(x = -0.7083333333333, y = 1.5, xend = -0.7083333333333, yend = 3.6)) +
+    geom_segment(aes(x = 0.7083333333333, y = 1.5, xend = 0.7083333333333, yend = 3.6)) +
+    geom_segment(aes(x = -0.7083333333333, y = 1.5, xend = 0.7083333333333, yend = 1.5)) +
+    geom_segment(aes(x = -0.7083333333333, y = 3.6, xend = 0.7083333333333, yend = 3.6)) +
     theme_minimal()
 
 }
