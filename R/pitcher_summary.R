@@ -7,7 +7,6 @@
 #' @return A table indicating the percentage breakdown of types of pitches for
 #' the pitcher
 #'
-#' @importFrom package function
 #' @import dplyr
 #'
 #' @export
@@ -39,7 +38,7 @@ pitcher_summary <- function(data, pitcherid, type = "tagged") {
 
   # Pitcher summary grouped by pitch type
   grouped_summary <- pitcher_data %>%
-    group_by(TaggedPitchType) %>%
+    group_by(!!sym(column)) %>%
     get_pitching_summary()
 
   # Add on overall pitcher game summary
