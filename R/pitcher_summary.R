@@ -35,7 +35,8 @@ pitcher_summary <- function(data, pitcherid, type = "tagged") {
     mutate(PitchCallClass = case_when(
       PitchCall  %in% c("BallCalled", "HitByPitch") ~ "Ball",
       TRUE ~ "Strike")) %>%
-    select(contains("Pitch"), RelSpeed, SpinRate, InducedVertBreak, Extension)
+    select(contains("Pitch"), RelSpeed, SpinRate, InducedVertBreak,
+           HorzBreak, Extension)
 
   # Pitcher summary grouped by pitch type
   grouped_summary <- pitcher_data %>%
@@ -65,6 +66,7 @@ get_pitching_summary <- function(pitcher_data) {
       `Avg Velocity` = mean(RelSpeed),
       `Avg Spin Rate` = mean(SpinRate),
       `Avg Induced Vert. Break` = mean(InducedVertBreak),
+      `Avg Horz. Break` = mean(HorzBreak),
       `Avg Extension` = mean(Extension),
       `Strike-Ball Percent` = sum(PitchCallClass == "Strike")*100 / n()
     ) %>%
