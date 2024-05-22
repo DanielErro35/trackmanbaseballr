@@ -1,11 +1,12 @@
-#' Function to summarize a pitcher's game statistics
+#' Function to summarize a pitcher's baseball game statistics
 #'
 #' @param data A trackman baseball dataset
-#' @param pitcherid The ID of pitcher
-#' @param pitch_type variable name "tagged" or "auto"
+#' @param pitcherid The numeric ID of the pitcher to summarize
+#' @param pitch_type The type of pitch classification to use; "tagged" or "auto".
+#' Default value is "tagged".
 #'
-#' @return A table indicating the percentage breakdown of types of pitches for
-#' the pitcher
+#' @return A table indicating pitching statistics for a specified pitcher
+#' in one baseball game, both overall and grouped by pitch type.
 #'
 #' @import dplyr
 #'
@@ -34,7 +35,8 @@ pitcher_summary <- function(data, pitcherid, type = "tagged") {
     mutate(PitchCallClass = case_when(
       PitchCall  %in% c("BallCalled", "HitByPitch") ~ "Ball",
       TRUE ~ "Strike")) %>%
-    select(contains("Pitch"), RelSpeed, SpinRate, InducedVertBreak, Extension)
+    select(contains("Pitch"), RelSpeed, SpinRate, InducedVertBreak,
+           HorzBreak, Extension)
 
   # Pitcher summary grouped by pitch type
   grouped_summary <- pitcher_data %>%
@@ -49,7 +51,7 @@ pitcher_summary <- function(data, pitcherid, type = "tagged") {
 }
 
 
-#' Helper function to summarize columns of interest
+#' Helper function to summarize columns of interest for a pitcher
 #'
 #' @param pitcher_data A trackman baseball dataframe, subsetted by pitcher of
 #' interest with PitchCallClass column to calculate strikes
@@ -64,6 +66,7 @@ get_pitching_summary <- function(pitcher_data) {
       `Avg Velocity` = mean(RelSpeed),
       `Avg Spin Rate` = mean(SpinRate),
       `Avg Induced Vert. Break` = mean(InducedVertBreak),
+      `Avg Horz. Break` = mean(HorzBreak),
       `Avg Extension` = mean(Extension),
       `Strike-Ball Percent` = sum(PitchCallClass == "Strike")*100 / n()
     ) %>%

@@ -2,7 +2,7 @@ poly_utah_game <- read.csv(here::here("5-10-24_CalPoly_UtahTech.csv"))
 library(dplyr)
 
 test_that("pitcher_summary dimensions work", {
-  correct_result <- c(6, 4)
+  correct_result <- c(7, 4)
 
   my_result <- pitcher_summary(data = poly_utah_game, pitcherid = 1000114562) %>%
     dim()
@@ -12,7 +12,7 @@ test_that("pitcher_summary dimensions work", {
 
 
 test_that("pitcher_summary changing type works", {
-  correct_result <- c(6, 6)
+  correct_result <- c(7, 6)
 
   my_result <- pitcher_summary(data = poly_utah_game,
                                pitcherid = 1000114562,
