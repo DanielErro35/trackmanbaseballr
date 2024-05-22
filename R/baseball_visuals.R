@@ -6,7 +6,7 @@
 #'
 #' @return A scatter plot displaying desired pitch data specified by the chart type
 #'
-#' @importFrom package function
+#' @import ggplot2
 #'
 #' @export
 pitcher_chart <- function(data, pitcherid, type){
@@ -31,9 +31,12 @@ pitcher_chart <- function(data, pitcherid, type){
     release_chart(pitcher_data, pitcher_firstname, pitcher_lastname, game_date)
   } else if(type == "location"){
     location_chart(pitcher_data, pitcher_firstname, pitcher_lastname, game_date)
+  } else {
+    stop("Please input a valid chart type (\"movement\", \"release\", \"location\")")
   }
 
 }
+
 
 #' Description of helper function
 #'
@@ -61,6 +64,7 @@ movement_chart <- function(data, firstname, lastname, game_date){
 
 }
 
+
 #' Description of helper function
 #'
 #' @param data trackman baseball dataset
@@ -86,6 +90,7 @@ release_chart <- function(data, firstname, lastname, game_date){
     theme_minimal()
 
 }
+
 
 #' Description of helper function
 #'
@@ -116,6 +121,7 @@ location_chart <- function(data, firstname, lastname, game_date){
 
 }
 
+
 #' Description of helper function
 #'
 #' @param data trackman baseball dataset
@@ -136,6 +142,7 @@ check_pitcherid <- function(data, pitcherid){
   }
 
 }
+
 
 #' Description of helper function
 #'
