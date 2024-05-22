@@ -11,17 +11,17 @@
 movement_chart <- function(data, pitcherid){
 
   # check that pitcherid is a number
-  check_pitcherid(pitcherid)
+  check_pitcherid(data, pitcherid)
 
   pitcher_data <- data %>%
     filter(PitcherId == pitcherid)
 
-  # Split the pitcher's name from "Last, First" to "First" "Last"
-  pitcher_name <- pitcher_data$Pitcher[1]
-  name_parts <- strsplit(pitcher_name, ", ")[[1]]
+  # Retrieve pitcher name and date
+  name_parts <- split_pitcher_name(pitcher_data)
   pitcher_lastname <- name_parts[1]
   pitcher_firstname <- name_parts[2]
 
+  # Retrieve date
   date <- pitcher_data$Date[1]
 
   pitcher_data %>%
@@ -84,14 +84,15 @@ release_point_chart <- function(data, pitcherid){
 
 #' Description of helper function
 #'
+#' @param data trackman baseball dataset
 #' @param pitcherid The ID of pitcher
 #'
-#' @return A scatter plot displaying pitch movement profiles by pitch type
+#' @return Whether the pitcherid provided is valid in the given dataset
 #'
 #' @importFrom package function
 #'
 #' @export
-check_pitcherid <- function(pitcherid){
+check_pitcherid <- function(data, pitcherid){
 
   # check that pitcherid is a number
   if (!is.numeric(pitcherid)) {
@@ -99,5 +100,23 @@ check_pitcherid <- function(pitcherid){
   }  else if (!(pitcherid %in% data$PitcherId)) {
     stop("pitcherid is not present as a pitcher in this game")
   }
+
+}
+
+#' Description of helper function
+#'
+#' @param data pitcher dataset
+#'
+#' @return A scatter plot displaying pitch movement profiles by pitch type
+#'
+#' @importFrom package function
+#'
+#' @export
+split_pitcher_name <- function(data){
+
+  # Split the pitcher's name from "Last, First" to "First" "Last"
+  pitcher_name <- data$Pitcher[1]
+  name_parts <- strsplit(pitcher_name, ", ")[[1]]
+  return(name_parts)
 
 }
