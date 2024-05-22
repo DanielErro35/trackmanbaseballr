@@ -30,8 +30,12 @@ test_that("get_pitching_summary works", {
 
   my_result <- pitcher_summary(data = poly_utah_game,
                                pitcherid = 1000114562,
-                               type = "tagged")
+                               type = "tagged") %>%
+    filter(Statistic == "Avg Velocity") %>%
+    select(Overall) %>%
+    pull() %>%
+    round(digits = 4)
 
-
-  expect_equal(round(my_result[2,3], digits = 4), correct_result)
+  expect_equal(my_result, correct_result)
 })
+
