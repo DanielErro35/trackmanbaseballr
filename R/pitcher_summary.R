@@ -11,7 +11,7 @@
 #' @import dplyr
 #'
 #' @export
-pitch_breakdown <- function(data, pitcherid, type = "tagged") {
+pitcher_summary <- function(data, pitcherid, type = "tagged") {
 
   # Check that pitcherid is a number in the dataset
   if (!is.numeric(pitcherid)) {
@@ -40,10 +40,10 @@ pitch_breakdown <- function(data, pitcherid, type = "tagged") {
   # Pitcher summary grouped by pitch type
   grouped_summary <- pitcher_data %>%
     group_by(TaggedPitchType) %>%
-    pitcher_summary()
+    get_pitching_summary()
 
   # Add on overall pitcher game summary
-  grouped_summary$Overall <- c(100, pitcher_summary(pitcher_data))
+  grouped_summary$Overall <- c(100, get_pitching_summary(pitcher_data))
 
   return(grouped_summary)
 
@@ -56,7 +56,7 @@ pitch_breakdown <- function(data, pitcherid, type = "tagged") {
 #' interest with PitchCallClass column to calculate strikes
 #'
 #' @return A dataframe with pitch type as columns and summarized values as rows
-pitcher_summary <- function(pitcher_data) {
+get_pitching_summary <- function(pitcher_data) {
 
   # get pitcher summary statistics
   pitcher_summarized <- pitcher_data %>%
@@ -78,3 +78,4 @@ pitcher_summary <- function(pitcher_data) {
 
   return(pitcher_summarized)
 }
+
