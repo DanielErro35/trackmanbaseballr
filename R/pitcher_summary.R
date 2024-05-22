@@ -44,7 +44,7 @@ pitcher_summary <- function(data, pitcherid, type = "tagged") {
   # Add on overall pitcher game summary
   grouped_summary$Overall <- c(100, get_pitching_summary(pitcher_data))
 
-  return(grouped_summary)
+  tibble::rownames_to_column(grouped_summary, var = "Statistic")
 
 }
 
