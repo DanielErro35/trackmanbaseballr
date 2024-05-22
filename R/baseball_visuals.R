@@ -2,13 +2,14 @@
 #'
 #' @param data trackman baseball dataset
 #' @param pitcherid The ID of pitcher
+#' @param type type of chart (movement, release, strike_zone)
 #'
-#' @return A scatter plot displaying pitch movement profiles by pitch type
+#' @return A scatter plot displaying desired pitch data specified by the chart type
 #'
 #' @importFrom package function
 #'
 #' @export
-movement_chart <- function(data, pitcherid){
+pitcher_chart <- function(data, pitcherid, type){
 
   # check that pitcherid is a number
   check_pitcherid(data, pitcherid)
@@ -21,13 +22,33 @@ movement_chart <- function(data, pitcherid){
   pitcher_lastname <- name_parts[1]
   pitcher_firstname <- name_parts[2]
 
-  # Retrieve date
-  date <- pitcher_data$Date[1]
+  # Retrieve date from game
+  game_date <- pitcher_data$Date[1]
 
-  pitcher_data %>%
+  if(type == "movement"){
+    movement_chart(pitcher_data, pitcher_firstname, pitcher_lastname, game_date)
+  } else if(type == "release"){
+    release_chart(pitcher_data, pitcher_firstname, pitcher_lastname, game_date)
+  }
+
+}
+
+#' Description of helper function
+#'
+#' @param data trackman baseball dataset
+#' @param pitcherid The ID of pitcher
+#'
+#' @return A scatter plot displaying pitch movement profiles by pitch type
+#'
+#' @importFrom package function
+#'
+#' @export
+movement_chart <- function(data, firstname, lastname, game_date){
+
+  data %>%
     ggplot(aes(x = HorzBreak, y = InducedVertBreak, color = TaggedPitchType)) +
     geom_point(stat = "identity") +
-    ggtitle(glue::glue("{pitcher_firstname} {pitcher_lastname}: Movement Profile ({date})")) +
+    ggtitle(glue::glue("{firstname} {lastname}: Movement Profile ({game_date})")) +
     xlab("Horizontal Break (in)") +
     ylab("Induced Vertical Break (in)") +
     xlim(-30, 30) +
@@ -38,40 +59,22 @@ movement_chart <- function(data, pitcherid){
 
 }
 
-#' Description of function
+#' Description of helper function
 #'
 #' @param data trackman baseball dataset
 #' @param pitcherid The ID of pitcher
 #'
-#' @return A scatter plot displaying pitch movement profiles by pitch type
+#' @return A scatter plot displaying pitcher's release points by pitch type
 #'
 #' @importFrom package function
 #'
 #' @export
-release_point_chart <- function(data, pitcherid){
+release_chart <- function(data, firstname, lastname, game_date){
 
-  # check that pitcherid is a number
-  if (!is.numeric(pitcherid)) {
-    stop("pitcherid must be numeric.")
-  }  else if (!(pitcherid %in% data$PitcherId)) {
-    stop("pitcherid is not present as a pitcher in this game")
-  }
-
-  pitcher_data <- data %>%
-    filter(PitcherId == pitcherid)
-
-  # Split the pitcher's name from "Last, First" to "First" "Last"
-  pitcher_name <- pitcher_data$Pitcher[1]
-  name_parts <- strsplit(pitcher_name, ", ")[[1]]
-  pitcher_lastname <- name_parts[1]
-  pitcher_firstname <- name_parts[2]
-
-  date <- pitcher_data$Date[1]
-
-  pitcher_data %>%
+  data %>%
     ggplot(aes(x = RelSide, y = RelHeight, color = TaggedPitchType)) +
     geom_point(stat = "identity") +
-    ggtitle(glue::glue("{pitcher_firstname} {pitcher_lastname}: Release Point ({date})")) +
+    ggtitle(glue::glue("{firstname} {lastname}: Release Point ({game_date})")) +
     xlab("Release Side") +
     ylab("Release Height") +
     xlim(-4, 4) +
@@ -107,14 +110,14 @@ check_pitcherid <- function(data, pitcherid){
 #'
 #' @param data pitcher dataset
 #'
-#' @return A scatter plot displaying pitch movement profiles by pitch type
+#' @return Splits the pitcher's name into "Last" "First"
 #'
 #' @importFrom package function
 #'
 #' @export
 split_pitcher_name <- function(data){
 
-  # Split the pitcher's name from "Last, First" to "First" "Last"
+  # Split the pitcher's name from "Last, First" to "Last" "First"
   pitcher_name <- data$Pitcher[1]
   name_parts <- strsplit(pitcher_name, ", ")[[1]]
   return(name_parts)
