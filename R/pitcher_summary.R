@@ -60,12 +60,12 @@ get_pitching_summary <- function(pitcher_data) {
   # get pitcher summary statistics
   pitcher_summarized <- pitcher_data %>%
     summarize(
-      pitch_type_percent = n() / nrow(pitcher_data)*100,
-      avg_velocity = mean(RelSpeed),
-      avg_spinrate = mean(SpinRate),
-      avg_induced_ver_break = mean(InducedVertBreak),
-      avg_extension = mean(Extension),
-      strike_ball_percent = sum(PitchCallClass == "Strike")*100 / n()
+      `Pitch Type Percent` = n() / nrow(pitcher_data)*100,
+      `Avg Velocity` = mean(RelSpeed),
+      `Avg Spin Rate` = mean(SpinRate),
+      `Avg Induced Vert. Break` = mean(InducedVertBreak),
+      `Avg Extension` = mean(Extension),
+      `Strike-Ball Percent` = sum(PitchCallClass == "Strike")*100 / n()
     ) %>%
     t() %>%
     as.data.frame()
