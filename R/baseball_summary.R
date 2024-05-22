@@ -1,6 +1,6 @@
 #' Function to summarize a pitcher's game statistics
 #'
-#' @param data trackman baseball dataset
+#' @param data A trackman baseball dataset
 #' @param pitcherid The ID of pitcher
 #' @param pitch_type variable name "tagged" or "auto"
 #'
@@ -13,13 +13,14 @@
 #' @export
 pitch_breakdown <- function(data, pitcherid, type = "tagged") {
 
-  # check that pitcherid is a number
+  # Check that pitcherid is a number in the dataset
   if (!is.numeric(pitcherid)) {
     stop("pitcherid must be numeric.")
   }  else if (!(pitcherid %in% data$PitcherId)) {
-    stop("pitcherid is not present as a pitcher in this game")
+    stop("pitcherid is not present as a pitcher in this game.")
   }
 
+  # Use specified pitch type column
   if (type == "tagged"){
     column = "TaggedPitchType"
   } else if (type == "auto"){
@@ -28,6 +29,7 @@ pitch_breakdown <- function(data, pitcherid, type = "tagged") {
     stop("Pitch type must be 'tagged' or 'auto'")
   }
 
+  # Clean and filter trackman data
   pitcher_data <- data %>%
     filter(PitcherId == pitcherid) %>%
     mutate(PitchCallClass = case_when(
@@ -35,20 +37,17 @@ pitch_breakdown <- function(data, pitcherid, type = "tagged") {
       TRUE ~ "Strike")) %>%
     select(contains("Pitch"), RelSpeed, SpinRate, InducedVertBreak, Extension)
 
+  # Pitcher summary grouped by pitch type
   grouped_summary <- pitcher_data %>%
     group_by(TaggedPitchType) %>%
-    pitch_summary()
+    pitcher_summary()
 
-  grouped_summary$Overall <- c(100, pitch_summary(pitcher_data))
+  # Add on overall pitcher game summary
+  grouped_summary$Overall <- c(100, pitcher_summary(pitcher_data))
 
   return(grouped_summary)
 
 }
-
-library(dplyr)
-poly_utah_game <- read.csv(here::here("5-10-24_CalPoly_UtahTech.csv"))
-
-pitch_breakdown(data = poly_utah_game, pitcherid = 1000114562)
 
 
 #' Helper function to summarize columns of interest
@@ -57,8 +56,9 @@ pitch_breakdown(data = poly_utah_game, pitcherid = 1000114562)
 #' interest with PitchCallClass column to calculate strikes
 #'
 #' @return A dataframe with pitch type as columns and summarized values as rows
-pitch_summary <- function(pitcher_data) {
+pitcher_summary <- function(pitcher_data) {
 
+  # get pitcher summary statistics
   pitcher_summarized <- pitcher_data %>%
     summarize(
       pitch_type_percent = n() / nrow(pitcher_data)*100,
