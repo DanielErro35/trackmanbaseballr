@@ -39,3 +39,27 @@ test_that("get_pitching_summary works", {
   expect_equal(my_result, correct_result)
 })
 
+test_that("get_pitching_summary works", {
+
+  cleaned_data <- poly_utah_game %>%
+    filter(PitcherId == 1000114562) %>%
+    mutate(PitchCallClass = case_when(
+      PitchCall  %in% c("BallCalled", "HitByPitch") ~ "Ball",
+      TRUE ~ "Strike")) %>%
+    select(contains("Pitch"), RelSpeed, SpinRate, InducedVertBreak, Extension)
+
+  correct_result <- cleaned_data %>%
+    group_by(TaggedPitchType) %>%
+    summarize(sum(PitchCallClass == "Strike")*100 / n()) %>%
+    filter(TaggedPitchType == "Slider") %>%
+    pull() %>%
+    round(digits = 3)
+
+  my_result <- get_pitching_summary(cleaned_data) %>%
+    filter(Statistic == "Strike-Ball Percent") %>%
+    select(Slider) %>%
+    pull() %>%
+    round(digits = 3)
+
+  expect_equal(my_result, correct_result)
+})
