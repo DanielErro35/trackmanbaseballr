@@ -11,11 +11,7 @@
 movement_chart <- function(data, pitcherid){
 
   # check that pitcherid is a number
-  if (!is.numeric(pitcherid)) {
-    stop("pitcherid must be numeric.")
-  }  else if (!(pitcherid %in% data$PitcherId)) {
-    stop("pitcherid is not present as a pitcher in this game")
-  }
+  check_pitcherid(pitcherid)
 
   pitcher_data <- data %>%
     filter(PitcherId == pitcherid)
@@ -83,5 +79,25 @@ release_point_chart <- function(data, pitcherid){
     geom_vline(xintercept=0) +
     geom_hline(yintercept=0) +
     theme_minimal()
+
+}
+
+#' Description of helper function
+#'
+#' @param pitcherid The ID of pitcher
+#'
+#' @return A scatter plot displaying pitch movement profiles by pitch type
+#'
+#' @importFrom package function
+#'
+#' @export
+check_pitcherid <- function(pitcherid){
+
+  # check that pitcherid is a number
+  if (!is.numeric(pitcherid)) {
+    stop("pitcherid must be numeric.")
+  }  else if (!(pitcherid %in% data$PitcherId)) {
+    stop("pitcherid is not present as a pitcher in this game")
+  }
 
 }
