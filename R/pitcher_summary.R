@@ -1,11 +1,12 @@
-#' Function to summarize a pitcher's game statistics
+#' Function to summarize a pitcher's baseball game statistics
 #'
 #' @param data A trackman baseball dataset
-#' @param pitcherid The ID of pitcher
-#' @param pitch_type variable name "tagged" or "auto"
+#' @param pitcherid The numeric ID of the pitcher to summarize
+#' @param pitch_type The type of pitch classification to use; "tagged" or "auto".
+#' Default value is "tagged".
 #'
-#' @return A table indicating the percentage breakdown of types of pitches for
-#' the pitcher
+#' @return A table indicating pitching statistics for a specified pitcher
+#' in one baseball game, both overall and grouped by pitch type.
 #'
 #' @import dplyr
 #'
@@ -49,7 +50,7 @@ pitcher_summary <- function(data, pitcherid, type = "tagged") {
 }
 
 
-#' Helper function to summarize columns of interest
+#' Helper function to summarize columns of interest for a pitcher
 #'
 #' @param pitcher_data A trackman baseball dataframe, subsetted by pitcher of
 #' interest with PitchCallClass column to calculate strikes
