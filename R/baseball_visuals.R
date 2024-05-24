@@ -106,6 +106,7 @@ release_chart <- function(data, firstname, lastname, game_date){
 #' @export
 location_chart <- function(data, firstname, lastname, game_date){
 
+  # import strike zone image
   strike_zone <- readPNG("C:/Users/jille/OneDrive/Desktop/STAT-541/strikezone.png")
 
   data %>%
@@ -118,12 +119,6 @@ location_chart <- function(data, firstname, lastname, game_date){
     guides(color = guide_legend(title = "Pitch Type")) +
     xlim(-3, 3) +
     ylim(0, 5)  +
-    # Add strike zone
-
-    #geom_segment(aes(x = -0.7083333333333, y = 1.5, xend = -0.7083333333333, yend = 3.6)) +
-    #geom_segment(aes(x = 0.7083333333333, y = 1.5, xend = 0.7083333333333, yend = 3.6)) +
-    #geom_segment(aes(x = -0.7083333333333, y = 1.5, xend = 0.7083333333333, yend = 1.5)) +
-    #geom_segment(aes(x = -0.7083333333333, y = 3.6, xend = 0.7083333333333, yend = 3.6)) +
     theme_bw() +
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank())
