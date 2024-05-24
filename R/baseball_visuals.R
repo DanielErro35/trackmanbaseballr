@@ -9,7 +9,7 @@
 #' @import ggplot2
 #'
 #' @export
-pitcher_chart <- function(data, pitcherid, type){
+pitcher_chart <- function(data, pitcherid, type = "movement"){
 
   # check that pitcherid is a number
   check_pitcherid(data, pitcherid)
@@ -56,6 +56,7 @@ movement_chart <- function(data, firstname, lastname, game_date){
     ggtitle(glue::glue("{firstname} {lastname}: Movement Profile ({game_date})")) +
     xlab("Horizontal Break (in)") +
     ylab("Induced Vertical Break (in)") +
+    guides(color = guide_legend(title = "Pitch Type")) +
     xlim(-30, 30) +
     ylim(-30, 30) +
     geom_vline(xintercept=0) +
@@ -81,8 +82,9 @@ release_chart <- function(data, firstname, lastname, game_date){
     ggplot(aes(x = RelSide, y = RelHeight, color = TaggedPitchType)) +
     geom_point(stat = "identity") +
     ggtitle(glue::glue("{firstname} {lastname}: Release Point ({game_date})")) +
-    xlab("Release Side") +
-    ylab("Release Height") +
+    xlab("Release Side (ft)") +
+    ylab("Release Height (ft)") +
+    guides(color = guide_legend(title = "Pitch Type")) +
     xlim(-4, 4) +
     ylim(0, 8) +
     geom_vline(xintercept=0) +
@@ -109,10 +111,11 @@ location_chart <- function(data, firstname, lastname, game_date){
   data %>%
     ggplot(aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType)) +
     annotation_raster(strike_zone, -0.75, 0.75, 0, 4.5) +
-    geom_point(stat = "identity") +
+    geom_point(stat = "identity", size = 3) +
     ggtitle(glue::glue("{firstname} {lastname}: Pitch Location ({game_date})")) +
-    xlab("x") +
-    ylab("y") +
+    xlab("Horizontal Location (ft)") +
+    ylab("Vertical Location (ft)") +
+    guides(color = guide_legend(title = "Pitch Type")) +
     xlim(-3, 3) +
     ylim(0, 5)  +
     # Add strike zone
@@ -121,7 +124,9 @@ location_chart <- function(data, firstname, lastname, game_date){
     #geom_segment(aes(x = 0.7083333333333, y = 1.5, xend = 0.7083333333333, yend = 3.6)) +
     #geom_segment(aes(x = -0.7083333333333, y = 1.5, xend = 0.7083333333333, yend = 1.5)) +
     #geom_segment(aes(x = -0.7083333333333, y = 3.6, xend = 0.7083333333333, yend = 3.6)) +
-    theme_void()
+    theme_bw() +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank())
 
 }
 
