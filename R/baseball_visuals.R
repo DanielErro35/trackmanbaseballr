@@ -2,7 +2,7 @@
 #'
 #' @param data trackman baseball dataset
 #' @param pitcherid The ID of pitcher
-#' @param type type of chart (movement, release, strike_zone)
+#' @param type type of chart (movement, release, location)
 #'
 #' @return A scatter plot displaying desired pitch data specified by the chart type
 #'
@@ -104,8 +104,11 @@ release_chart <- function(data, firstname, lastname, game_date){
 #' @export
 location_chart <- function(data, firstname, lastname, game_date){
 
+  strike_zone <- readPNG("C:/Users/jille/OneDrive/Desktop/STAT-541/strikezone.png")
+
   data %>%
     ggplot(aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType)) +
+    annotation_raster(strike_zone, -0.75, 0.75, 0, 4.5) +
     geom_point(stat = "identity") +
     ggtitle(glue::glue("{firstname} {lastname}: Pitch Location ({game_date})")) +
     xlab("x") +
@@ -113,11 +116,12 @@ location_chart <- function(data, firstname, lastname, game_date){
     xlim(-3, 3) +
     ylim(0, 5)  +
     # Add strike zone
-    geom_segment(aes(x = -0.7083333333333, y = 1.5, xend = -0.7083333333333, yend = 3.6)) +
-    geom_segment(aes(x = 0.7083333333333, y = 1.5, xend = 0.7083333333333, yend = 3.6)) +
-    geom_segment(aes(x = -0.7083333333333, y = 1.5, xend = 0.7083333333333, yend = 1.5)) +
-    geom_segment(aes(x = -0.7083333333333, y = 3.6, xend = 0.7083333333333, yend = 3.6)) +
-    theme_minimal()
+
+    #geom_segment(aes(x = -0.7083333333333, y = 1.5, xend = -0.7083333333333, yend = 3.6)) +
+    #geom_segment(aes(x = 0.7083333333333, y = 1.5, xend = 0.7083333333333, yend = 3.6)) +
+    #geom_segment(aes(x = -0.7083333333333, y = 1.5, xend = 0.7083333333333, yend = 1.5)) +
+    #geom_segment(aes(x = -0.7083333333333, y = 3.6, xend = 0.7083333333333, yend = 3.6)) +
+    theme_void()
 
 }
 
