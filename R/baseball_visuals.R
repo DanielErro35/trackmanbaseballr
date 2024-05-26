@@ -19,7 +19,7 @@ pitcher_chart <- function(data, pitcherid, type = "movement"){
   pitcher_data <- data %>%
     filter(PitcherId == pitcherid)
 
-  # Retrieve pitcher name and date
+  # Retrieve pitcher name
   name_parts <- split_pitcher_name(pitcher_data)
   pitcher_lastname <- name_parts[1]
   pitcher_firstname <- name_parts[2]
