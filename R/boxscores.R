@@ -36,9 +36,19 @@ pitcher_box_score <- function(data, pitcherid){
   # Calculates the number of batters the pitcher struck out
   pitcher_strikeouts <- length(which(pitcher_data$KorBB == "Strikeout"))
 
+  # Calculates the number of innings pitched
+  pitcher_innings <- round((sum(pitcher_data$OutsOnPlay) + pitcher_strikeouts)/3, digits = 1)
+
+  # Reformatting pitcher_innings so that .1 and .2 represent 1/3 and 2/3 of an inning
+  if (grepl("\\.3$", pitcher_innings)) {
+    pitcher_innings <- as.numeric(sub("\\.3$", ".1", pitcher_innings))
+  } else if (grepl("\\.7$", pitcher_innings)){
+    pitcher_innings <- as.numeric(sub("\\.7$", ".2", pitcher_innings))
+  }
+
   # Create box score dataframe, rename columns
-  pitcher_box <- t(as.data.frame(c(pitcher_hits, pitcher_runs, pitcher_walks, pitcher_strikeouts),
-                                 row.names = c("H", "R", "BB", "K")))
+  pitcher_box <- t(as.data.frame(c(pitcher_innings, pitcher_hits, pitcher_runs, pitcher_walks, pitcher_strikeouts),
+                                 row.names = c("IP", "H", "R", "BB", "K")))
 
   # Replace dataframe row with pitcher name
   rownames(pitcher_box) <- c(glue::glue("{pitcher_firstname} {pitcher_lastname}"))
