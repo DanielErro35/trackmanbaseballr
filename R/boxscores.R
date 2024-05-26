@@ -1,4 +1,4 @@
-#' Helper function to provide a pitcher's box score from Trackman data
+#' Function to provide a pitcher's box score from Trackman data
 #'
 #' @param data A trackman baseball dataset
 #' @param pitcherid The numeric ID of the pitcher to summarize
