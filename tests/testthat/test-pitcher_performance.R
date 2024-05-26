@@ -42,9 +42,18 @@ test_that("location_chart returns expected plot", {
 
 })
 
-test_that("pitcher_chart returns correct error from check_pitcherid", {
+test_that("pitcher_chart returns correct error with wrong graph type input", {
 
-  expect_error(pitcher_chart(data = poly_utah_game,pitcherid = 1000),
+  error_message <- "Please input a valid chart type (\"movement\", \"release\", \"location\")"
+  expect_error(pitcher_chart(data = poly_utah_game,
+                             pitcherid = 1000114562,
+                             type = "boxplot"),
+               error_message)
+})
+
+test_that("pitcher_chart returns correct error from check_pitcherid given wrong id", {
+
+  expect_error(pitcher_chart(data = poly_utah_game, pitcherid = 1000),
                "pitcherid is not present as a pitcher in this game")
 
 })
