@@ -3,7 +3,30 @@ library(dplyr)
 
 
 test_that("pitcher_chart returns expected plot", {
+  pitcher_data <- poly_utah_game %>%
+    filter(PitcherId == 1000114562)
 
+  # Expected result
+  expected_plot <- pitcher_data %>%
+    ggplot(aes(x = HorzBreak, y = InducedVertBreak, color = TaggedPitchType)) +
+    geom_point(stat = "identity") +
+    xlab("Horizontal Break (in)") +
+    ylab("Induced Vertical Break (in)") +
+    guides(color = guide_legend(title = "Pitch Type")) +
+    xlim(-30, 30) +
+    ylim(-30, 30) +
+    geom_vline(xintercept=0) +
+    geom_hline(yintercept=0) +
+    theme_minimal()
+
+  # Actual result
+  actual_plot <- pitcher_chart(data = poly_utah_game,
+                               pitcherid = 1000114562,
+                               type = "movement")
+
+  # Compare plots
+  expect_identical(actual_plot$data, expected_plot$data)
+  expect_equal(length(actual_plot$layers), length(expected_plot$layers))
 })
 
 
