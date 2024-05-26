@@ -101,7 +101,7 @@ release_chart <- function(data, firstname, lastname, game_date){
 #'
 #' @return A scatter plot displaying pitch locations by pitch type
 #'
-#' @importFrom package function
+#' @importFrom png readPNG
 #'
 #' @export
 location_chart <- function(data, firstname, lastname, game_date){
