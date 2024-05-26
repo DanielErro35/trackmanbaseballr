@@ -1,4 +1,4 @@
-#' Description of function
+#' Function to create plots from a pitcher's Trackman data
 #'
 #' @param data trackman baseball dataset
 #' @param pitcherid The ID of pitcher
@@ -7,6 +7,8 @@
 #' @return A scatter plot displaying desired pitch data specified by the chart type
 #'
 #' @import ggplot2
+#' @import dplyr
+#' @import png
 #'
 #' @export
 pitcher_chart <- function(data, pitcherid, type = "movement"){
@@ -38,16 +40,12 @@ pitcher_chart <- function(data, pitcherid, type = "movement"){
 }
 
 
-#' Description of helper function
+#' Helper function that creates a movement plot
 #'
 #' @param data trackman baseball dataset
 #' @param pitcherid The ID of pitcher
 #'
 #' @return A scatter plot displaying pitch movement profiles by pitch type
-#'
-#' @importFrom package function
-#'
-#' @export
 movement_chart <- function(data, firstname, lastname, game_date){
 
   data %>%
@@ -66,16 +64,12 @@ movement_chart <- function(data, firstname, lastname, game_date){
 }
 
 
-#' Description of helper function
+#' Helper function that creates a release point plot
 #'
 #' @param data trackman baseball dataset
 #' @param pitcherid The ID of pitcher
 #'
 #' @return A scatter plot displaying pitcher's release points by pitch type
-#'
-#' @importFrom package function
-#'
-#' @export
 release_chart <- function(data, firstname, lastname, game_date){
 
   data %>%
@@ -94,16 +88,12 @@ release_chart <- function(data, firstname, lastname, game_date){
 }
 
 
-#' Description of helper function
+#' Helper function that creates a pitch location plot
 #'
 #' @param data trackman baseball dataset
 #' @param pitcherid The ID of pitcher
 #'
 #' @return A scatter plot displaying pitch locations by pitch type
-#'
-#' @importFrom package function
-#'
-#' @export
 location_chart <- function(data, firstname, lastname, game_date){
 
   # import strike zone image
@@ -126,16 +116,12 @@ location_chart <- function(data, firstname, lastname, game_date){
 }
 
 
-#' Description of helper function
+#' Helper function that checks whether the pitcherid provided is valid in the given dataset
 #'
 #' @param data trackman baseball dataset
 #' @param pitcherid The ID of pitcher
 #'
-#' @return Whether the pitcherid provided is valid in the given dataset
-#'
-#' @importFrom package function
-#'
-#' @export
+#' @return Stop if pitcherid is not valid
 check_pitcherid <- function(data, pitcherid){
 
   # check that pitcherid is a number
@@ -148,15 +134,11 @@ check_pitcherid <- function(data, pitcherid){
 }
 
 
-#' Description of helper function
+#' Helper function that splits the pitcher's name into "Last" "First"
 #'
 #' @param data pitcher dataset
 #'
-#' @return Splits the pitcher's name into "Last" "First"
-#'
-#' @importFrom package function
-#'
-#' @export
+#' @return Two strings: "Last" "First"
 split_pitcher_name <- function(data){
 
   # Split the pitcher's name from "Last, First" to "Last" "First"
