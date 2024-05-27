@@ -1,9 +1,9 @@
 #' Function to provide a pitcher's box score from Trackman data
 #'
-#' @param data A trackman baseball dataset
+#' @param data A Trackman baseball dataset
 #' @param pitcherid The numeric ID of the pitcher to summarize
 #'
-#' @return A box score table
+#' @return A box score data frame
 #'
 #' @import dplyr
 #'
@@ -54,7 +54,7 @@ pitcher_box_score <- function(data, pitcherid){
   rownames(pitcher_box) <- c(glue::glue("{pitcher_firstname} {pitcher_lastname}"))
 
 
-  return(pitcher_box)
+  return(as.data.frame(pitcher_box))
 
 }
 
