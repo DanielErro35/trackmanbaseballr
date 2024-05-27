@@ -3,7 +3,6 @@
 export("%>%")
 export(pitcher_box_score)
 export(pitcher_chart)
-export(pitcher_performance)
 export(pitcher_summary)
 import(dplyr)
 import(ggplot2)
