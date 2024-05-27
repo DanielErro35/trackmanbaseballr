@@ -7,12 +7,12 @@
 pitcher_box_score(data, pitcherid)
 }
 \arguments{
-\item{data}{A trackman baseball dataset}
+\item{data}{A Trackman baseball dataset}
 
 \item{pitcherid}{The numeric ID of the pitcher to summarize}
 }
 \value{
-A box score table
+A box score data frame
 }
 \description{
 Function to provide a pitcher's box score from Trackman data

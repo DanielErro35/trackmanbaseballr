@@ -8,7 +8,6 @@
 #'
 #' @import ggplot2
 #' @import dplyr
-#' @import png
 #'
 #' @export
 pitcher_chart <- function(data, pitcherid, type = "movement"){
@@ -92,6 +91,8 @@ release_chart <- function(data, firstname, lastname, game_date){
 #'
 #' @param data trackman baseball dataset
 #' @param pitcherid The ID of pitcher
+#'
+#' @importFrom png readPNG
 #'
 #' @return A scatter plot displaying pitch locations by pitch type
 location_chart <- function(data, firstname, lastname, game_date){
