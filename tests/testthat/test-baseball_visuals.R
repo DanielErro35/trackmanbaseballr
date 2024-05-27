@@ -92,7 +92,7 @@ test_that("location_chart returns expected plot", {
     filter(PitcherId == 809938)
 
   # import strike zone image
-  strike_zone <- readPNG("strikezone.png")
+  strike_zone <- readPNG(here::here("strikezone.png"))
 
   # Expected result
   expected_plot <- pitcher_data %>%
@@ -119,14 +119,6 @@ test_that("location_chart returns expected plot", {
   expect_equal(length(actual_plot$layers), length(expected_plot$layers))
 })
 
-test_that("pitcher_chart returns correct error with wrong graph type input", {
-
-  error_message <- "Please input a valid chart type (\"movement\", \"release\", \"location\")"
-  expect_error(pitcher_chart(data = poly_utah_game,
-                             pitcherid = 1000114562,
-                             type = "boxplot"),
-               error_message)
-})
 
 test_that("pitcher_chart returns correct error from check_pitcherid given wrong id", {
 
@@ -140,4 +132,24 @@ test_that("pitcher_chart returns correct error from check_pitcherid with non-num
   expect_error(pitcher_chart(data = poly_utah_game, pitcherid = "Aaron Burr"),
                "pitcherid must be numeric.")
 
+})
+
+
+
+test_that("pitcher_chart returns correct error with wrong graph type input", {
+
+  error_message <- 'Please input a valid chart type (\"movement\", \"release\", \"location\")'
+
+  # Call the function with inputs that may cause an error
+  result <- tryCatch({
+    pitcher_chart(data = poly_utah_game,
+                  pitcherid = 1000114562,
+                  type = "no graph")  # Call the function with bad input
+  }, error = function(e) {
+    # Handle the error (e) here
+    return(e$message)  # Return the error message
+  })
+
+  expect_identical(result,
+               error_message)
 })

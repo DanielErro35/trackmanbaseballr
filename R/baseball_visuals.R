@@ -33,7 +33,7 @@ pitcher_chart <- function(data, pitcherid, type = "movement"){
   } else if(type == "location"){
     location_chart(pitcher_data, pitcher_firstname, pitcher_lastname, game_date)
   } else {
-    stop("Please input a valid chart type (\"movement\", \"release\", \"location\")")
+    stop('Please input a valid chart type (\"movement\", \"release\", \"location\")')
   }
 
 }
@@ -98,7 +98,7 @@ release_chart <- function(data, firstname, lastname, game_date){
 location_chart <- function(data, firstname, lastname, game_date){
 
   # import strike zone image
-  strike_zone <- readPNG("strikezone.png")
+  strike_zone <- readPNG(here::here("strikezone.png"))
 
   data %>%
     ggplot(aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType)) +
