@@ -33,7 +33,7 @@ pitcher_chart <- function(data, pitcherid, type = "movement"){
   } else if(type == "location"){
     location_chart(pitcher_data, pitcher_firstname, pitcher_lastname, game_date)
   } else {
-    stop("Please input a valid chart type (\"movement\", \"release\", \"location\")")
+    stop('Please input a valid chart type (\"movement\", \"release\", \"location\")')
   }
 
 }
