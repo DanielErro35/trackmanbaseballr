@@ -92,7 +92,7 @@ test_that("location_chart returns expected plot", {
     filter(PitcherId == 809938)
 
   # import strike zone image
-  strike_zone <- readPNG("strikezone.png")
+  strike_zone <- readPNG(here::here("strikezone.png"))
 
   # Expected result
   expected_plot <- pitcher_data %>%

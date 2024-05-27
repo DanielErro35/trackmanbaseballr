@@ -98,7 +98,7 @@ release_chart <- function(data, firstname, lastname, game_date){
 location_chart <- function(data, firstname, lastname, game_date){
 
   # import strike zone image
-  strike_zone <- readPNG("strikezone.png")
+  strike_zone <- readPNG(here::here("strikezone.png"))
 
   data %>%
     ggplot(aes(x = PlateLocSide, y = PlateLocHeight, color = TaggedPitchType)) +
