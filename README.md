@@ -39,7 +39,7 @@ pitcher_chart(data = poly_utah_game,
               pitcherid = 1000114562,
               type = "movement")
 ```
-<img src="man/figures/README-chart-movement-1.png" width="100%" />
+<img src="man/figures/README-pitcher-chart-movement-1.png" width="100%" />
 
 Generate numeric summaries of box scores for a specified pitcher
 
