@@ -1,3 +1,21 @@
+---
+title: "Create output for Readme"
+output: html_document
+---
+
+```{r}
+#| include: false
+#| message: false
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%", 
+  fig.width=10, 
+  dpi=300
+)
+```
+
 # trackmanbaseballr
 
 The `trackmanbaseballr` package was created to generate visual and numeric summaries of pitchers in college baseball game data collected and stored by [TrackMan Baseball](https://www.trackman.com/baseball).
@@ -20,31 +38,32 @@ poly_utah_game <- read.csv(here::here("5-10-24_CalPoly_UtahTech.csv"))
 ```
 Let's see what the first few rows and columns should look like:
 ```{r}
+#| label: data-preview
 head(poly_utah_game)
 ```
-<img src="man/figures/README-data-preview.png" width="80%" />
 
 
 Generate numeric summaries of a baseball game for a specified pitcher
 
 ```{r}
+#| label: pitcher-summary
 pitcher_summary(data = poly_utah_game, pitcherid = 1000114562)
 ```
-<img src="man/figures/README-pitcher-summary.png" width="100%" />
+
 
 Generate a movement chart for a specified pitcher to show horizontal and induced vertical breaks of each pitch
 
 ```{r}
+#| label: pitcher-chart-movement
 pitcher_chart(data = poly_utah_game,
               pitcherid = 1000114562,
               type = "movement")
 ```
-<img src="man/figures/README-chart-movement-1.png" width="100%" />
 
 Generate numeric summaries of box scores for a specified pitcher
 
 ```{r}
+#| label: pitcher-box-score
 pitcher_box_score(data = poly_utah_game,
                   pitcherid = 1000114562)
 ```
-<img src="man/figures/README-pitcher-boxscore.png" width="100%" />
